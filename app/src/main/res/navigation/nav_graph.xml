@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/convertFragment"
-        android:name="com.example.convertsampleproj.ConvertFragment"
+        android:name="com.example.convertsampleproj.ui.convert.ConvertFragment"
         android:label="fragment_convert"
         tools:layout="@layout/fragment_convert" />
 </navigation>

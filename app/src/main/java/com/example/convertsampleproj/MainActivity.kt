@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.convertsampleproj.databinding.ActivityMainBinding
+import com.example.convertsampleproj.ui.contact.ContactFragment
+import com.example.convertsampleproj.ui.convert.ConvertFragment
+import com.example.convertsampleproj.ui.disclaimer.DisclaimerFragment
+import com.example.convertsampleproj.ui.table.TableFragment
 
 class MainActivity : AppCompatActivity() {
   //  binding 해주기 (뷰 바인딩 설정)
@@ -18,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     enableEdgeToEdge()
     setContentView(binding.root)
     
+    window.statusBarColor = resources.getColor(R.color.white, theme)
     setBottomNavigationView()
     
     //    하단 Navigation 바 추가, Padding 조절 (Bottom: 0)

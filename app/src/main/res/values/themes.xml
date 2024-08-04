@@ -3,7 +3,16 @@
     <style name="Base.Theme.ConvertSampleProj" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:colorControlHighlight">@color/green01</item>
+
+    </style>
+
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorPrimary">#FFC9C9C9</item>
+        <item name="android:colorControlNormal">#FFC9C9C9</item>
     </style>
 
     <style name="Theme.ConvertSampleProj" parent="Base.Theme.ConvertSampleProj" />
+
 </resources>

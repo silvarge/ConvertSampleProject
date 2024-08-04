@@ -1,13 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ConvertFragment">
+    tools:context=".ui.convert.ConvertFragment">
 
     <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/bg_title"
+        android:text="@string/nav_convert"
+        android:gravity="start|center"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/noto_sans_bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_v0"
+        />
+
+    <TextView
+        android:id="@+id/tvConvCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/card_effect"
+        android:clickable="true"
+        android:elevation="7dp"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="30dp"
+        android:text="@string/dummy_string"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_v1"
+        app:layout_constraintEnd_toStartOf="@id/guidelineCenter"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="@id/guideline_v0" />
+
+    <NumberPicker
+        android:id="@+id/npConvSelectType"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_radius_square"
+        android:descendantFocusability="blocksDescendants"
+        android:elevation="7dp"
+        android:theme="@style/NumberPickerStyle"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_v1"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toEndOf="@id/guidelineCenter"
+        app:layout_constraintTop_toTopOf="@id/guideline_v0" />
+
+    <TextView
+        android:id="@+id/tvValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_tr_w_square"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/noto_sans_thin"
+        android:padding="8dp"
+        android:text="VALUE"
+        app:layout_constraintBottom_toTopOf="@+id/etBeforeValue"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintHeight_percent=".09"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/guideline_v1"
+        app:layout_constraintVertical_bias=".5"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="spread" />
+
+    <TextView
+        android:id="@+id/tvMainUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:gravity="end|bottom"
+        android:paddingEnd="10dp"
+        android:text="CM"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/tvSubUnit"
+        app:layout_constraintEnd_toEndOf="@id/tvValue"
+        app:layout_constraintStart_toStartOf="@id/tvValue"
+        app:layout_constraintTop_toTopOf="@+id/tvValue"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvSubUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end|bottom"
+        android:paddingEnd="10dp"
+        android:text="Sub Units Bef"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvValue"
+        app:layout_constraintEnd_toEndOf="@id/tvValue"
+        app:layout_constraintStart_toStartOf="@id/tvValue"
+        app:layout_constraintTop_toBottomOf="@+id/tvMainUnit"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/etBeforeValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/white"
+        android:gravity="end|center"
+        android:hint="Before Convert"
+        android:inputType="numberDecimal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline_v2"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintHeight_percent=".08"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/tvValue"
+        app:layout_constraintVertical_bias=".5"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="spread" />
+
+    <ImageView
+        android:id="@+id/imgConvert"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="화살표"
+        android:src="@drawable/favorite_24px"
+        app:layout_constraintBottom_toTopOf="@id/guideline_v3"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/guideline_v2"
+        app:layout_constraintWidth_default="spread" />
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bg_tr_w_square"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/noto_sans_thin"
+        android:padding="8dp"
+        android:text="RESULT"
+        app:layout_constraintBottom_toTopOf="@+id/etRstValue"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintHeight_percent=".09"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/guideline_v3"
+        app:layout_constraintVertical_bias=".5"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="spread" />
+
+    <TextView
+        android:id="@+id/tvRstMainUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:gravity="end|bottom"
+        android:paddingEnd="10dp"
+        android:text="CM"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@id/tvRstSubUnit"
+        app:layout_constraintEnd_toEndOf="@id/tvResult"
+        app:layout_constraintStart_toStartOf="@id/tvResult"
+        app:layout_constraintTop_toTopOf="@+id/tvResult"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvRstSubUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end|bottom"
+        android:paddingEnd="10dp"
+        android:text="Sub Units Rst"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvResult"
+        app:layout_constraintEnd_toEndOf="@id/tvResult"
+        app:layout_constraintStart_toStartOf="@id/tvResult"
+        app:layout_constraintTop_toBottomOf="@+id/tvRstMainUnit"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/etRstValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/white"
+        android:gravity="end|center"
+        android:clickable="false"
+        android:focusable="false"
+        android:hint="After Convert"
+        android:inputType="numberDecimal"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintHeight_percent=".08"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/tvResult"
+        app:layout_constraintVertical_bias=".5"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="spread" />
+
+
+    <!--    GuideLine   -->
+    <!--    가이드라인 바깥 프레임 및 세로 중심선-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dummy_string"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <!--    추가 뷰 분할       -->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.06" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.37" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.64" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.69" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
