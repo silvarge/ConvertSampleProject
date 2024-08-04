@@ -6,5 +6,11 @@ enum class LengthEnum (val displayName: String) {
   MILLIMETER("mm"),
   KILOMETER("km"),
   INCH("in"),
-  FEET("ft"),
+  FEET("ft");
+  
+  companion object {
+    fun getIndexByDisplayName(displayName: String): Int {
+      return entries.toTypedArray().indexOfFirst { it.displayName == displayName }
+    }
+  }
 }

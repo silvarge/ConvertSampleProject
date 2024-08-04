@@ -1,8 +1,8 @@
 package com.example.convertsampleproj.domain.usecase
 
-class ConvertUseCase(private val hydrogenConvert: HydrogenConvert) {
-  
-  fun performHydrogenConversion(val1: Double, val2: Double, type1: Int, type2: Int): Number {
-    return hydrogenConvert.convertUnit(val1, val2, type1, type2)
+class ConvertUseCase() {
+  fun performHydrogenConversion(val1: Double, befType: Int, aftType: Int): Number {
+    val hydrogenConvert = HydrogenConvert()
+    return hydrogenConvert.convertUnit(val1, befType, aftType)
   }
 }

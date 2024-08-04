@@ -13,6 +13,11 @@
         <item name="android:colorControlNormal">#FFC9C9C9</item>
     </style>
 
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">300dp</item>
+        <item name="android:windowMinWidthMinor">300dp</item>
+    </style>
+
     <style name="Theme.ConvertSampleProj" parent="Base.Theme.ConvertSampleProj" />
 
 </resources>
