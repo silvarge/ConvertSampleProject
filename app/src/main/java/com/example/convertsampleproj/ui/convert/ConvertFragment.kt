@@ -18,12 +18,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.convertsampleproj.R
 import com.example.convertsampleproj.databinding.FragmentConvertBinding
 import com.example.convertsampleproj.domain.model.LengthEnum
 import com.example.convertsampleproj.domain.model.PickerEnum
 import com.example.convertsampleproj.domain.usecase.ConvertUseCase
+import com.example.convertsampleproj.ui.contact.ItemListDialogFragment
+import com.example.convertsampleproj.ui.contact.OnItemSelectedListener
 import com.example.convertsampleproj.ui.modal.ConvertCustomDialog
 
 /**
@@ -31,7 +37,7 @@ import com.example.convertsampleproj.ui.modal.ConvertCustomDialog
  * Use the [ConvertFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ConvertFragment : Fragment(), ConvertCustomDialog.OnConvertModalListener {
+class ConvertFragment : Fragment(), OnItemSelectedListener {
   //  binding 해주기 (뷰 바인딩 설정)
   private lateinit var binding: FragmentConvertBinding
   
@@ -40,8 +46,6 @@ class ConvertFragment : Fragment(), ConvertCustomDialog.OnConvertModalListener {
   
   override fun onAttach(context: Context) {
     super.onAttach(context)
-//    audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-//    mediaPlayer = MediaPlayer.create(context, R.raw.test_audio)
   }
   
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,26 +57,32 @@ class ConvertFragment : Fragment(), ConvertCustomDialog.OnConvertModalListener {
   ): View? {
     // Inflate the layout for this fragment
     binding = FragmentConvertBinding.inflate(inflater, container, false)
+    return binding.root
+  }
+  
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    
     convertUseCase = ConvertUseCase()
     convertViewModel = ViewModelProvider(this)[ConvertViewModel::class.java]
 
 //    Picker 값 실시간 업데이트
     setValuePicker(convertViewModel, binding.npConvSelectType)
-//    convertViewModel.updatePickerValues(PickerValue.entries.toTypedArray())
-//    단위 변환
-    setUpListeners()
     
-    return binding.root
+    //    단위 변환
+    setUpListeners()
   }
   
   // 이벤트 따라 단위 변환 - ValuePicker 변환 시는 setValuePicker 함수에서 변환 실행
   private fun setUpListeners() {
     binding.tvResult.setOnClickListener {
-      showConvertModal("Result")
+//      showConvertModal("Result")
+      showBottomSheet(R.id.tvResult)
     }
     
     binding.tvValue.setOnClickListener {
-      showConvertModal("Value")
+//      showConvertModal("Value")
+      showBottomSheet(R.id.tvValue)
     }
     
     binding.etBeforeValue.addTextChangedListener(object : TextWatcher {
@@ -133,14 +143,39 @@ class ConvertFragment : Fragment(), ConvertCustomDialog.OnConvertModalListener {
   }
   
   // [Function] Modal
-  private fun showConvertModal (type: String){
-    val modalFragment = ConvertCustomDialog()
-    modalFragment.setOnConvertModalListener(this)
-    modalFragment.show(childFragmentManager, "ConvertModalFragment")
+//  private fun showConvertModal(type: String) {
+//    val modalFragment = ConvertCustomDialog()
+//    modalFragment.setOnConvertModalListener(this)
+//    modalFragment.show(childFragmentManager, "ConvertModalFragment")
+//  }
+//
+  //  [Function] Bottom Sheet ------
+  private fun showBottomSheet(targetTextViewId: Int) {
+    Log.d("showBottomSheet", "showBottomSheet: ${targetTextViewId}")
+    
+    val bottomSheet = ItemListDialogFragment()
+    bottomSheet.setOnItemSelectedListener(this)
+    val args = Bundle().apply {
+      putInt("buttonId", targetTextViewId)
+    }
+    bottomSheet.arguments = args
+    bottomSheet.show(parentFragmentManager, "ItemListDialogFragment")
   }
   
-  override fun OnSelectConvertUnit(selectedUnit: String, enteredValue: Double) {
+  override fun onItemSelected(item: String, targetTextViewId: Int) {
+    Log.d("onItemSelected", "onItemSelected: ${item}, ${targetTextViewId} ${R.id.tvResult} ${R.id.tvValue}")
+    when (targetTextViewId) {
+      R.id.tvResult -> binding.tvRstMainUnit.text = item
+      R.id.tvValue -> binding.tvMainUnit.text = item
+    }
     performConversionUnit()
   }
+  
+  
+  // [Function] Bottom Sheet -----
+
+//  override fun OnSelectConvertUnit(selectedUnit: String, enteredValue: Double) {
+//    performConversionUnit()
+//  }
   
 }

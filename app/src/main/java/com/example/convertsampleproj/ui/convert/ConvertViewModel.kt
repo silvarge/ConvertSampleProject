@@ -1,5 +1,6 @@
 package com.example.convertsampleproj.ui.convert
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,8 +28,17 @@ class ConvertViewModel : ViewModel() {
   
   val text: LiveData<String> = _text
   
+  private val _selectedUnitItem = MutableLiveData<Int>()
+  val selectedUnitItem: LiveData<Int> = _selectedUnitItem
+  
+  
   //  인덱스 업데이트
   fun updateSelectedIndex(index: Int) {
     _selectedIndex.value = index
+  }
+  
+  fun updateSelectedItem(index: Int) {
+    _selectedUnitItem.value = index
+    Log.d("selectedUnitItem", "updateSelectedItem: ${selectedUnitItem.value}")
   }
 }

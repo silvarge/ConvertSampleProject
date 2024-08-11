@@ -1,11 +1,17 @@
 package com.example.convertsampleproj.ui.contact
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.convertsampleproj.R
+import com.example.convertsampleproj.databinding.FragmentContactBinding
+import kotlin.math.log
 
 /**
  * A simple [Fragment] subclass.
@@ -13,7 +19,9 @@ import com.example.convertsampleproj.R
  * create an instance of this fragment.
  */
 class ContactFragment : Fragment() {
-
+  private lateinit var binding: FragmentContactBinding
+  private var textViewUpdate: Int = R.id.result // default
+  
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
@@ -23,24 +31,38 @@ class ContactFragment : Fragment() {
     inflater: LayoutInflater, container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View? {
+    binding = FragmentContactBinding.inflate(inflater, container, false)
+//    contactViewModel = ViewModelProvider(requireActivity())[ContactViewModel::class.java]
+//
+//    contactViewModel.selectedItem.observe(viewLifecycleOwner, Observer { item ->
+//      updateResultText(item)
+//    })
+    
+    binding.button.setOnClickListener {
+      textViewUpdate = R.id.result
+      showBottomSheet()
+    }
+    
+    binding.button1.setOnClickListener {
+      textViewUpdate = R.id.result1
+      showBottomSheet()
+    }
+    
     // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_contact, container, false)
+    return binding.root
   }
   
-  companion object {
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    @JvmStatic
-    fun newInstance(param1: String, param2: String) =
-      ContactFragment().apply {
-
-      }
+  private fun showBottomSheet(){
+    val bottomSheet = ItemListDialogFragment()
+    bottomSheet.show(parentFragmentManager, "ItemListDialogFragment")
   }
+  
+  private fun updateResultText(result: String){
+    Log.d("ContactFragment", "updateResultText: $result")
+    when(textViewUpdate){
+      R.id.result -> binding.result.text = result
+      R.id.result1 -> binding.result1.text = result
+    }
+  }
+
 }

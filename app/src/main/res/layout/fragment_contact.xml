@@ -7,8 +7,32 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BUTTON" />
+
+    <TextView
+        android:id="@+id/result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/nav_contact" />
+        android:layout_height="wrap_content"
+        android:layout_margin="100dp"
+        android:text="TEST"
+        />
+
+    <TextView
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="BUTTON" />
+
+    <TextView
+        android:id="@+id/result1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:text="TEST"
+        />
 
 </FrameLayout>
