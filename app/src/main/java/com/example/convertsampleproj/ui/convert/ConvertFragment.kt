@@ -3,11 +3,16 @@ package com.example.convertsampleproj.ui.convert
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.ToneGenerator
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.SoundEffectConstants
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -15,6 +20,7 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -44,6 +50,10 @@ class ConvertFragment : Fragment(), OnItemSelectedListener {
   private lateinit var convertUseCase: ConvertUseCase
   private lateinit var convertViewModel: ConvertViewModel
   
+  private lateinit var audioManager: AudioManager
+  private lateinit var vibrator: Vibrator
+  private lateinit var toneGenerator: ToneGenerator
+  
   override fun onAttach(context: Context) {
     super.onAttach(context)
   }
@@ -57,6 +67,10 @@ class ConvertFragment : Fragment(), OnItemSelectedListener {
   ): View? {
     // Inflate the layout for this fragment
     binding = FragmentConvertBinding.inflate(inflater, container, false)
+    audioManager = requireActivity().getSystemService(android.content.Context.AUDIO_SERVICE) as AudioManager
+    vibrator = requireContext().getSystemService(Vibrator::class.java)
+    toneGenerator = ToneGenerator(AudioManager.STREAM_SYSTEM, 40)
+    
     return binding.root
   }
   
@@ -116,6 +130,7 @@ class ConvertFragment : Fragment(), OnItemSelectedListener {
   }
   
   //  [Function] Picker 업데이트에 따른 Card 값 업데이트
+  @RequiresApi(Build.VERSION_CODES.Q)
   private fun setValuePicker(
     viewModel: ConvertViewModel, npValuePicker: NumberPicker
   ) {
@@ -133,6 +148,13 @@ class ConvertFragment : Fragment(), OnItemSelectedListener {
 //    변경 이벤트 발생 (picker 돌렸을 때)
     npValuePicker.setOnValueChangedListener { _, _, newValue ->
       viewModel.updateSelectedIndex(newValue)
+//      audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK)
+//      view?.playSoundEffect(SoundEffectConstants.CLICK)
+//      TONE_SUP_INTERCEPT
+//      TONE_PROP_BEEP
+//      toneGenerator.startTone(ToneGenerator.TONE_PROP_BEEP, 50)
+      triggerVibration()
+      
     }
 
 //    Card의 Value 값 변환
@@ -141,6 +163,27 @@ class ConvertFragment : Fragment(), OnItemSelectedListener {
       performConversionUnit()
     }
   }
+  
+  @RequiresApi(Build.VERSION_CODES.Q)
+  private fun triggerVibration() {
+    if (vibrator.hasVibrator()) {
+      try {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          // Android 8.0 (API 26) 이상의 경우
+          val vibrationEffect = VibrationEffect.createOneShot(30, 20)
+//          val vibrationEffect = VibrationEffect.createOneShot(100, VibrationEffect.EFFECT_TICK)
+          vibrator.vibrate(vibrationEffect) // 100ms 동안 진동
+        } else {
+          // Android 8.0 이하에서 사용
+          @Suppress("DEPRECATION")
+          vibrator.vibrate(30) // 100ms 동안 진동
+        }
+      } catch (e: Exception) {
+        e.printStackTrace() // 예외 처리
+      }
+    }
+  }
+  
   
   // [Function] Modal
 //  private fun showConvertModal(type: String) {
